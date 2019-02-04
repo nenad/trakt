@@ -88,9 +88,6 @@ func (auth *AuthClient) PollToken(ctx context.Context, code Code) chan Result {
 	go func() {
 		timer := time.NewTicker(time.Second * time.Duration(code.Interval))
 		ticks := code.ExpiresIn/code.Interval - 1
-
-		fmt.Printf("Ticks: %d\n", ticks)
-
 	loop:
 		for {
 			select {

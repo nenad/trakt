@@ -51,6 +51,12 @@ func (t *Client) get(url string, response interface{}) error {
 	if err != nil {
 		return err
 	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode > 204 {
+		body, _ := ioutil.ReadAll(resp.Body)
+		return fmt.Errorf("non-successful response received: %s - status code: %d", body, resp.StatusCode)
+	}
 
 	if response != nil {
 		err = json.NewDecoder(resp.Body).Decode(&response)
@@ -74,10 +80,11 @@ func (t *Client) post(url string, body interface{}, response interface{}) error 
 	if err != nil {
 		return err
 	}
+	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
 		body, _ := ioutil.ReadAll(resp.Body)
-		return fmt.Errorf("error while removing from watchlist: %s", string(body))
+		return fmt.Errorf("non-successful response received: %s - status code: %d", body, resp.StatusCode)
 	}
 
 	if response != nil {
