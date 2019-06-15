@@ -3,7 +3,7 @@ package trakt_test
 import (
 	"bytes"
 	"github.com/bmizerany/assert"
-	"github.com/nenadstojanovikj/trakt"
+	"github.com/nenad/trakt"
 	"io/ioutil"
 	"net/http"
 	"testing"
